@@ -214,7 +214,7 @@ def train(args):
     
     time1 = time.time()
 
-    best_precision = 0  # 매우 큰 값으로 초기값 가정
+    best_precision = 0.0  # 매우 큰 값으로 초기값 가정
     patience_limit = 3  # 몇 번의 epoch까지 지켜볼지를 결정
     patience_check = 0  # 현재 몇 epoch 연속으로 loss 개선이 안되는지를 기록
     best_checkpoint = {}
@@ -256,7 +256,7 @@ def train(args):
             train_bgn_time = time.time()
 
             ### early stopping 여부를 체크하는 부분 ###
-            if np.mean(bal_statistics['average_precision']) > best_precision:  # loss가 개선되지 않은 경우
+            if np.mean(bal_statistics['average_precision']) < best_precision:  # loss가 개선되지 않은 경우
                 patience_check += 1
 
                 if patience_check >= patience_limit:  # early stopping 조건 만족 시 조기 종료
@@ -276,7 +276,8 @@ def train(args):
                 best_checkpoint = {
                     'iteration': iteration,
                     'model': model.module.state_dict(),
-                    'sampler': train_sampler.state_dict()}
+                    'sampler': train_sampler.state_dict()
+                }
             ####
         
         # Save model

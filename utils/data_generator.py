@@ -48,6 +48,8 @@ class AudioSetDataset(object):
             waveform = self.resample(waveform)
             target = hf['target'][index_in_hdf5].astype(np.float32)
 
+
+
         data_dict = {
             'audio_name': audio_name, 'waveform': waveform, 'target': target}
             
