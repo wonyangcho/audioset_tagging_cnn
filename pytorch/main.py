@@ -213,6 +213,11 @@ def train(args):
         model.to(device)
     
     time1 = time.time()
+
+    best_precision = 0  # 매우 큰 값으로 초기값 가정
+    patience_limit = 3  # 몇 번의 epoch까지 지켜볼지를 결정
+    patience_check = 0  # 현재 몇 epoch 연속으로 loss 개선이 안되는지를 기록
+    best_checkpoint = {}
     
     for batch_data_dict in train_loader:
         """batch_data_dict: {
@@ -249,6 +254,30 @@ def train(args):
             logging.info('------------------------------------')
 
             train_bgn_time = time.time()
+
+            ### early stopping 여부를 체크하는 부분 ###
+            if np.mean(bal_statistics['average_precision']) > best_precision:  # loss가 개선되지 않은 경우
+                patience_check += 1
+
+                if patience_check >= patience_limit:  # early stopping 조건 만족 시 조기 종료
+                    checkpoint_path = os.path.join(
+                        checkpoints_dir, '{}_iterations_best.pth'.format(best_checkpoint['iteration']))
+
+                    torch.save(checkpoint, checkpoint_path)
+                    logging.info('Model saved to {}'.format(checkpoint_path))
+
+                    break
+
+            else:  # loss가 개선된 경우
+                best_precision = np.mean(bal_statistics['average_precision'])
+                patience_check = 0
+
+
+                best_checkpoint = {
+                    'iteration': iteration,
+                    'model': model.module.state_dict(),
+                    'sampler': train_sampler.state_dict()}
+            ####
         
         # Save model
         if iteration % 100000 == 0:
