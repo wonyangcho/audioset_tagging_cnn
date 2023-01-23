@@ -1,15 +1,15 @@
 #!/bin/bash
 WORKSPACE=${1:-"./workspaces/audioset_tagging"}   # Default argument.
 
-CUDA_VISIBLE_DEVICES=1 python3 pytorch/main.py train \
+CUDA_VISIBLE_DEVICES=0 python3 pytorch/main.py train \
     --workspace=$WORKSPACE \
     --data_type='full_train' \
     --window_size=1024 \
     --hop_size=512 \
-    --mel_bins=64 \
+    --mel_bins=128 \
     --fmin=50 \
     --fmax=2000 \
-    --model_type='MobileNetV2' \
+    --model_type='MobileVit' \
     --loss_type='clip_bce' \
     --balanced='balanced' \
     --augmentation='mixup' \
@@ -20,7 +20,7 @@ CUDA_VISIBLE_DEVICES=1 python3 pytorch/main.py train \
     --cuda
 
 # Plot statistics
-python3 utils/plot_statistics.py plot \
-    --dataset_dir=$DATASET_DIR \
-    --workspace=$WORKSPACE \
-    --select=1_aug
+#python3 utils/plot_statistics.py plot \
+#    --dataset_dir=$DATASET_DIR \
+#    --workspace=$WORKSPACE \
+#    --select=1_aug

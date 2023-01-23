@@ -163,7 +163,7 @@ class Cnn14(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -250,7 +250,7 @@ class Cnn14_no_specaug(nn.Module):
             n_mels=mel_bins, fmin=fmin, fmax=fmax, ref=ref, amin=amin, top_db=top_db, 
             freeze_parameters=True)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -338,7 +338,7 @@ class Cnn14_no_dropout(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -423,7 +423,7 @@ class Cnn6(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock5x5(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock5x5(in_channels=64, out_channels=128)
@@ -508,7 +508,7 @@ class Cnn10(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -795,7 +795,7 @@ class ResNet22(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         # self.conv_block2 = ConvBlock(in_channels=64, out_channels=64)
@@ -882,7 +882,7 @@ class ResNet38(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         # self.conv_block2 = ConvBlock(in_channels=64, out_channels=64)
@@ -969,7 +969,7 @@ class ResNet54(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         # self.conv_block2 = ConvBlock(in_channels=64, out_channels=64)
@@ -1056,7 +1056,7 @@ class Cnn14_emb512(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -1147,7 +1147,7 @@ class Cnn14_emb128(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -1238,7 +1238,7 @@ class Cnn14_emb32(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -1329,7 +1329,7 @@ class MobileNetV1(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         def conv_bn(inp, oup, stride):
             _layers = [
@@ -1499,7 +1499,7 @@ class MobileNetV2(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
  
         width_mult=1.
         block = InvertedResidual
@@ -2247,7 +2247,7 @@ class Wavegram_Cnn14(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -2345,7 +2345,7 @@ class Wavegram_Logmel_Cnn14(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=128, out_channels=128)
@@ -2572,7 +2572,7 @@ class Cnn14_16k(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -2669,7 +2669,7 @@ class Cnn14_8k(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -2760,7 +2760,7 @@ class Cnn14_mixup_time_domain(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -3037,7 +3037,7 @@ class Cnn14_DecisionLevelMax(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -3138,7 +3138,7 @@ class Cnn14_DecisionLevelAvg(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -3243,7 +3243,7 @@ class Cnn14_DecisionLevelAtt(nn.Module):
         self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2, 
             freq_drop_width=8, freq_stripes_num=2)
 
-        self.bn0 = nn.BatchNorm2d(64)
+        self.bn0 = nn.BatchNorm2d(mel_bins)
 
         self.conv_block1 = ConvBlock(in_channels=1, out_channels=64)
         self.conv_block2 = ConvBlock(in_channels=64, out_channels=128)
@@ -3312,5 +3312,133 @@ class Cnn14_DecisionLevelAtt(nn.Module):
 
         output_dict = {'framewise_output': framewise_output, 
             'clipwise_output': clipwise_output}
+
+        return output_dict
+
+
+class MobileVit(nn.Module):
+    def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin,
+                 fmax, classes_num):
+
+        super(MobileVit, self).__init__()
+
+        window = 'hann'
+        center = True
+        pad_mode = 'reflect'
+        ref = 1.0
+        amin = 1e-10
+        top_db = None
+        # Spectrogram extractor
+        self.spectrogram_extractor = Spectrogram(n_fft=window_size, hop_length=hop_size,
+                                                 win_length=window_size, window=window, center=center,
+                                                 pad_mode=pad_mode,
+                                                 freeze_parameters=True)
+
+        # Logmel feature extractor
+        self.logmel_extractor = LogmelFilterBank(sr=sample_rate, n_fft=window_size,
+                                                 n_mels=mel_bins, fmin=fmin, fmax=fmax, ref=ref, amin=amin,
+                                                 top_db=top_db,
+                                                 freeze_parameters=True)
+
+        # Spec augmenter
+        self.spec_augmenter = SpecAugmentation(time_drop_width=64, time_stripes_num=2,
+                                               freq_drop_width=8, freq_stripes_num=2)
+
+        self.bn0 = nn.BatchNorm2d(mel_bins)
+
+        width_mult = 1.
+        block = InvertedResidual
+        input_channel = 32
+        # input_channel = 3
+        last_channel = 1280
+        interverted_residual_setting = [
+            # t, c, n, s
+            [1, 16, 1, 1],
+            [6, 24, 2, 2],
+            [6, 32, 3, 2],
+            [6, 64, 4, 2],
+            [6, 96, 3, 2],
+            [6, 160, 3, 1],
+            [6, 320, 1, 1],
+        ]
+
+        def conv_bn(inp, oup, stride):
+            _layers = [
+                nn.Conv2d(inp, oup, 3, 1, 1, bias=False),
+                nn.AvgPool2d(stride),
+                nn.BatchNorm2d(oup),
+                nn.ReLU6(inplace=True)
+            ]
+            _layers = nn.Sequential(*_layers)
+            init_layer(_layers[0])
+            init_bn(_layers[2])
+            return _layers
+
+        def conv_1x1_bn(inp, oup):
+            _layers = nn.Sequential(
+                nn.Conv2d(inp, oup, 1, 1, 0, bias=False),
+                nn.BatchNorm2d(oup),
+                nn.ReLU6(inplace=True)
+            )
+            init_layer(_layers[0])
+            init_bn(_layers[1])
+            return _layers
+
+        # building first layer
+        input_channel = int(input_channel * width_mult)
+        self.last_channel = int(last_channel * width_mult) if width_mult > 1.0 else last_channel
+        self.features = [conv_bn(1, input_channel, 2)]
+        self.features.append(mobilevit_xxs(input_channel))
+
+        self.features.append(conv_1x1_bn(input_channel, self.last_channel))
+
+        # make it nn.Sequential
+
+        self.features = nn.Sequential(*self.features)
+
+        self.fc1 = nn.Linear(1280, 1024, bias=True)
+        self.fc_audioset = nn.Linear(1024, classes_num, bias=True)
+
+        self.init_weight()
+
+    def init_weight(self):
+        init_bn(self.bn0)
+        init_layer(self.fc1)
+        init_layer(self.fc_audioset)
+
+    def forward(self, input, mixup_lambda=None):
+        """
+        Input: (batch_size, data_length)"""
+
+        x = self.spectrogram_extractor(input)  # (batch_size, 1, time_steps, freq_bins)
+        x = self.logmel_extractor(x)  # (batch_size, 1, time_steps, mel_bins)
+
+        x = x.transpose(1, 3)
+        x = self.bn0(x)
+        x = x.transpose(1, 3)
+
+        if self.training:
+            x = self.spec_augmenter(x)
+
+        Mixup
+        on
+        spectrogram
+        if self.training and mixup_lambda is not None:
+            x = do_mixup(x, mixup_lambda)
+
+        print(f"======== shape 2 : {x.shape}")
+        x = self.features(x)
+
+        x = torch.mean(x, dim=3)
+
+        (x1, _) = torch.max(x, dim=2)
+        x2 = torch.mean(x, dim=2)
+        x = x1 + x2
+        x = F.dropout(x, p=0.5, training=self.training)
+        x = F.relu_(self.fc1(x))
+        embedding = F.dropout(x, p=0.5, training=self.training)
+        clipwise_output = torch.sigmoid(self.fc_audioset(x))
+
+        output_dict = {'clipwise_output': clipwise_output, 'embedding': embedding}
 
         return output_dict
