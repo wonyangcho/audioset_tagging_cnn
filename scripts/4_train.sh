@@ -1,7 +1,7 @@
 #!/bin/bash
 WORKSPACE=${1:-"./workspaces/audioset_tagging"}   # Default argument.
 
-CUDA_VISIBLE_DEVICES=0 python3 pytorch/main.py train \
+CUDA_VISIBLE_DEVICES=1 python3 pytorch/main.py train \
     --workspace=$WORKSPACE \
     --data_type='full_train' \
     --window_size=1024 \
