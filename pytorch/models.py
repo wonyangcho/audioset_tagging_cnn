@@ -5,7 +5,7 @@ from torchlibrosa.stft import Spectrogram, LogmelFilterBank
 from torchlibrosa.augmentation import SpecAugmentation
 
 from pytorch_utils import do_mixup, interpolate, pad_framewise_output
- 
+from mobilevit import *
 
 def init_layer(layer):
     """Initialize a Linear or Convolutional layer. """
@@ -3420,9 +3420,7 @@ class MobileVit(nn.Module):
         if self.training:
             x = self.spec_augmenter(x)
 
-        Mixup
-        on
-        spectrogram
+        # Mixup on spectrogram
         if self.training and mixup_lambda is not None:
             x = do_mixup(x, mixup_lambda)
 
