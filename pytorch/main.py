@@ -217,6 +217,12 @@ def train(args):
 
     time1 = time.time()
 
+    best_bal_precision = 0.0
+    best_bal_iteration = 0
+
+    best_test_precision = 0.0
+    best_test_iteration = 0
+
     for batch_data_dict in train_loader:
         """batch_data_dict: {
             'audio_name': (batch_size [*2 if mixup],), 
@@ -238,6 +244,14 @@ def train(args):
             logging.info('Validate test mAP: {:.3f}'.format(
                 np.mean(test_statistics['average_precision'])))
 
+            if best_bal_precision < np.mean(bal_statistics['average_precision']):
+                best_bal_precision = np.mean(bal_statistics['average_precision'])
+                best_bal_iteration = iteration
+
+            if best_test_precision < np.mean(test_statistics['average_precision']):
+                best_test_precision = np.mean(test_statistics['average_precision'])
+                best_test_iteration = iteration
+
             statistics_container.append(iteration, bal_statistics, data_type='bal')
             statistics_container.append(iteration, test_statistics, data_type='test')
             statistics_container.dump()
@@ -252,6 +266,9 @@ def train(args):
             logging.info('------------------------------------')
 
             train_bgn_time = time.time()
+
+            print(f"best bal iteration {best_bal_iteration} precision {best_bal_precision} ")
+            print(f"best test iteration {best_test_iteration} precision {best_test_precision} ")
 
         # Save model
         if iteration % 100000 == 0:
