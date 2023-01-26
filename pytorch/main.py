@@ -315,7 +315,7 @@ def train(args):
 
         # Backward
         loss.backward()
-        print(loss)
+        #print(loss)
 
         optimizer.step()
         optimizer.zero_grad()
