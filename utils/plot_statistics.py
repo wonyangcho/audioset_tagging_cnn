@@ -16,7 +16,7 @@ import config
 
 def _load_metrics0(filename, sample_rate, window_size, hop_size, mel_bins, fmin, 
     fmax, data_type, model_type, loss_type, balanced, augmentation, batch_size):
-    workspace0 = '/mnt/cephfs_new_wj/speechsv/qiuqiang.kong/workspaces/pub_audioset_tagging_cnn_transfer'
+    workspace0 = '/work/wycho/project/audioset_tagging_cnn/workspaces/audioset_tagging'
     statistics_path = os.path.join(workspace0, 'statistics', filename, 
         'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
         sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
@@ -683,7 +683,14 @@ def plot(args):
         line, = ax.plot(bal_map, color='c', alpha=bal_alpha)
         line, = ax.plot(test_map, label='cnn14,none,none', color='c', alpha=test_alpha)
         lines.append(line)
+    elif select == 'mobilevit':
+        iterations = np.arange(0, max_plot_iteration, 2000)
 
+        (bal_map, test_map, legend) = _load_metrics0('main', 32000, 1024, 
+            512, 128, 50, 14000, 'full_train', 'MobileVit', 'clip_bce', 'balanced', 'mixup', 32)
+        line, = ax.plot(bal_map, color='b', alpha=bal_alpha)
+        line, = ax.plot(test_map, label='MobileVit', color='b', alpha=test_alpha)
+        lines.append(line)
         
 
     ax.set_ylim(0, 1.)

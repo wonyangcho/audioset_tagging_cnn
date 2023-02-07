@@ -3351,16 +3351,7 @@ class MobileVit(nn.Module):
         input_channel = 32
         # input_channel = 3
         last_channel = 1280
-        interverted_residual_setting = [
-            # t, c, n, s
-            [1, 16, 1, 1],
-            [6, 24, 2, 2],
-            [6, 32, 3, 2],
-            [6, 64, 4, 2],
-            [6, 96, 3, 2],
-            [6, 160, 3, 1],
-            [6, 320, 1, 1],
-        ]
+
 
         def conv_bn(inp, oup, stride):
             _layers = [
