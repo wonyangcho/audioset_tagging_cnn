@@ -3355,7 +3355,7 @@ class MobileVit(nn.Module):
         block = InvertedResidual
         input_channel = 32
         # input_channel = 3
-        last_channel = 640
+        last_channel = 640 #1280
 
 
         def conv_bn(inp, oup, stride):
@@ -3408,8 +3408,8 @@ class MobileVit(nn.Module):
 
         self.features = nn.Sequential(*self.features)
 
-        self.fc1 = nn.Linear(1280, 1024, bias=True)
-        self.fc_audioset = nn.Linear(1024, classes_num, bias=True)
+        self.fc1 = nn.Linear(last_channel, 512, bias=True)
+        self.fc_audioset = nn.Linear(512, classes_num, bias=True)
 
         self.init_weight()
 
