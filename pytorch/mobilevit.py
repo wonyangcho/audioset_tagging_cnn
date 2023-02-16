@@ -226,7 +226,7 @@ class MobileViT(nn.Module):
         x = self.pool(x)
 
         # x = self.fc(x)
-        print(f"shape 16 {x.shape}")
+        #print(f"shape 16 {x.shape}")
         return x
 
 

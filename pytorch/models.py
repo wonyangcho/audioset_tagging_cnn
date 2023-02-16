@@ -3402,7 +3402,7 @@ class MobileVit(nn.Module):
 
         self.features.append(conv_1x1_bn(640, self.last_channel))
 
-        print(f"last channel {self.last_channel}")
+        #print(f"last channel {self.last_channel}")
 
         # make it nn.Sequential
 
