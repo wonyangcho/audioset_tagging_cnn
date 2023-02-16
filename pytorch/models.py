@@ -3436,7 +3436,7 @@ class MobileVit(nn.Module):
         if self.training and mixup_lambda is not None:
             x = do_mixup(x, mixup_lambda)
 
-        print(f"======== shape 2 : {x.shape}")
+        #print(f"======== shape 2 : {x.shape}")
         x = self.features(x)
 
         x = torch.mean(x, dim=3)
