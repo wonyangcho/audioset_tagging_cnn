@@ -6,6 +6,7 @@ from torchlibrosa.augmentation import SpecAugmentation
 
 from pytorch_utils import do_mixup, interpolate, pad_framewise_output
 from mobilevit import *
+import torchvision.transforms as T
 
 def init_layer(layer):
     """Initialize a Linear or Convolutional layer. """
@@ -1584,8 +1585,12 @@ class MobileNetV2(nn.Module):
         # Mixup on spectrogram
         if self.training and mixup_lambda is not None:
             x = do_mixup(x, mixup_lambda)
+
+        print(f"shape mobilenetv2 input {x.shape}")
         
         x = self.features(x)
+
+        print(f"shape mobilenetv2 {x.shape}")
         
         x = torch.mean(x, dim=3)
         
@@ -3350,7 +3355,7 @@ class MobileVit(nn.Module):
         block = InvertedResidual
         input_channel = 32
         # input_channel = 3
-        last_channel = 1280
+        last_channel = 640
 
 
         def conv_bn(inp, oup, stride):
@@ -3375,13 +3380,29 @@ class MobileVit(nn.Module):
             init_bn(_layers[1])
             return _layers
 
+        class Interpolate(nn.Module):
+            def __init__(self, size, mode):
+                super(Interpolate, self).__init__()
+                self.interp = nn.functional.interpolate
+                self.size = size
+                self.mode = mode
+
+            def forward(self, x):
+                x = self.interp(x, size=self.size, mode=self.mode, align_corners=False)
+                return x
+
         # building first layer
         input_channel = int(input_channel * width_mult)
         self.last_channel = int(last_channel * width_mult) if width_mult > 1.0 else last_channel
-        self.features = [conv_bn(1, input_channel, 2)]
-        self.features.append(mobilevit_xxs(input_channel))
+        #self.features = [conv_bn(1, input_channel, 2)]
 
-        self.features.append(conv_1x1_bn(input_channel, self.last_channel))
+        self.features = [Interpolate(size=(256, 256), mode='bilinear')]
+        self.features.append(conv_bn(1, input_channel, 1))
+        self.features.append(mobilevit_s(input_channel))
+
+        self.features.append(conv_1x1_bn(640, self.last_channel))
+
+        print(f"last channel {self.last_channel}")
 
         # make it nn.Sequential
 
@@ -3415,7 +3436,7 @@ class MobileVit(nn.Module):
         if self.training and mixup_lambda is not None:
             x = do_mixup(x, mixup_lambda)
 
-        #print(f"======== shape 2 : {x.shape}")
+        print(f"======== shape 2 : {x.shape}")
         x = self.features(x)
 
         x = torch.mean(x, dim=3)

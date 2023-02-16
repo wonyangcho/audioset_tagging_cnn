@@ -202,8 +202,8 @@ class MobileViT(nn.Module):
         self.mvit.append(MobileViTBlock(dims[2], L[2], channels[9], kernel_size, patch_size, int(dims[2] * 4)))
 
         print(f"channels[-2] {channels[-2]} channels[-1] {channels[-1]}")
-        # self.conv2 = conv_1x1_bn(channels[-2], channels[-1])
-        self.conv2 = conv_1x1_bn(channels[-2], input_channel)
+        self.conv2 = conv_1x1_bn(channels[-2], channels[-1])
+        #self.conv2 = conv_1x1_bn(channels[-2], input_channel)
 
         # self.pool = nn.AvgPool2d(ih // 32, 1)
         self.pool = nn.AdaptiveAvgPool2d((1, 1))  # nn.AvgPool2d(1, 1)
@@ -226,7 +226,7 @@ class MobileViT(nn.Module):
         x = self.pool(x)
 
         # x = self.fc(x)
-        # print(f"shape 16 {x.shape}")
+        print(f"shape 16 {x.shape}")
         return x
 
 

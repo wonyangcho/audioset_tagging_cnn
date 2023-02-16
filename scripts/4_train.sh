@@ -1,12 +1,12 @@
 #!/bin/bash
 WORKSPACE=${1:-"./workspaces/audioset_tagging"}   # Default argument.
 
-CUDA_VISIBLE_DEVICES=0 python3 pytorch/main.py train \
+CUDA_VISIBLE_DEVICES=1 python3 pytorch/main.py train \
     --workspace=$WORKSPACE \
     --data_type='full_train' \
     --window_size=1024 \
-    --hop_size=512 \   #320 <-- mobilevit 인 경우 512로
-    --mel_bins=128 \   #64  <-- mobilevit 인 경우 128로
+    --hop_size=320 \
+    --mel_bins=64 \
     --fmin=50 \
     --fmax=14000 \
     --model_type='MobileVit' \
