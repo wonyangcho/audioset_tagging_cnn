@@ -31,6 +31,7 @@ from evaluate import Evaluator
 import config
 from losses import get_loss_func
 
+from logger import web_logger
 
 def train(args):
     """Train AudioSet tagging model.
@@ -244,6 +245,9 @@ def train(args):
 
             logging.info('Validate test mAP: {:.3f}'.format(
                 np.mean(test_statistics['average_precision'])))
+            
+            web_logger.log(args, {"Validate bal mAP": np.mean(bal_statistics['average_precision'])})
+            web_logger.log(args, {"Validate test mAP": np.mean(test_statistics['average_precision'])})
 
             if best_bal_precision < np.mean(bal_statistics['average_precision']):
                 best_bal_precision = np.mean(bal_statistics['average_precision'])
@@ -359,6 +363,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     args.filename = get_filename(__file__)
+    
+    args.local_time = f"{time.localtime().tm_mon:02d}{time.localtime().tm_mday:02d}{time.localtime().tm_hour:02d}{time.localtime().tm_min:02d}{time.localtime().tm_sec:02d}"
 
     if args.mode == 'train':
         train(args)
