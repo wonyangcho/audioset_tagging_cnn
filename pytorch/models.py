@@ -3452,3 +3452,5 @@ class MobileVit(nn.Module):
         output_dict = {'clipwise_output': clipwise_output, 'embedding': embedding}
 
         return output_dict
+    
+    
