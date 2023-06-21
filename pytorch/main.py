@@ -246,16 +246,46 @@ def train(args):
             logging.info('Validate test mAP: {:.3f}'.format(
                 np.mean(test_statistics['average_precision'])))
             
-            web_logger.log(args, {"Validate bal mAP": np.mean(bal_statistics['average_precision'])})
-            web_logger.log(args, {"Validate test mAP": np.mean(test_statistics['average_precision'])})
+            
+           
+
+           
 
             if best_bal_precision < np.mean(bal_statistics['average_precision']):
                 best_bal_precision = np.mean(bal_statistics['average_precision'])
                 best_bal_iteration = iteration
 
+                web_logger.log(args, {"best bal mAP": np.mean(bal_statistics['average_precision'])})
+                web_logger.log(args, {"best bal Iteration": best_bal_iteration})
+
+                checkpoint = {
+                'iteration': iteration,
+                'model': model.module.state_dict(),
+                'sampler': train_sampler.state_dict()}
+
+                checkpoint_path = os.path.join(
+                    checkpoints_dir, f"{iteration}_iterations_best_bal.pth")
+
+                torch.save(checkpoint, checkpoint_path)
+                logging.info('Model saved to {}'.format(checkpoint_path))
+
             if best_test_precision < np.mean(test_statistics['average_precision']):
                 best_test_precision = np.mean(test_statistics['average_precision'])
                 best_test_iteration = iteration
+
+                web_logger.log(args, {"best test mAP": np.mean(test_statistics['average_precision'])})
+                web_logger.log(args, {"best test Iteration": best_test_iteration})
+
+                checkpoint = {
+                'iteration': iteration,
+                'model': model.module.state_dict(),
+                'sampler': train_sampler.state_dict()}
+
+                checkpoint_path = os.path.join(
+                    checkpoints_dir, f"{iteration}_iterations_best_test.pth")
+
+                torch.save(checkpoint, checkpoint_path)
+                logging.info('Model saved to {}'.format(checkpoint_path))
 
             statistics_container.append(iteration, bal_statistics, data_type='bal')
             statistics_container.append(iteration, test_statistics, data_type='test')
@@ -360,6 +390,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--resume_iteration', type=int, default=0)
     parser_train.add_argument('--early_stop', type=int, default=1000000)
     parser_train.add_argument('--cuda', action='store_true', default=False)
+    parser_train.add_argument('--use_wandb', action='store_true', default=False)
 
     args = parser.parse_args()
     args.filename = get_filename(__file__)
