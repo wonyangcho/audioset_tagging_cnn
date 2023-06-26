@@ -23,6 +23,7 @@ from models import (Cnn14, Cnn14_no_specaug, Cnn14_no_dropout,
                     Cnn14_mixup_time_domain, Cnn14_DecisionLevelMax, Cnn14_DecisionLevelAtt,
                     MobileVit)
 from mobilenetv3 import MobileNetV3
+from ast_models import AST
 from pytorch_utils import (move_data_to_device, count_parameters, count_flops,
                            do_mixup)
 from data_generator import (AudioSetDataset, TrainSampler, BalancedTrainSampler,
@@ -286,6 +287,12 @@ def train(args):
 
                 torch.save(checkpoint, checkpoint_path)
                 logging.info('Model saved to {}'.format(checkpoint_path))
+
+                checkpoint_path = os.path.join(
+                    checkpoints_dir, f"best_test.pth")
+
+                torch.save(checkpoint, checkpoint_path)
+               
 
             statistics_container.append(iteration, bal_statistics, data_type='bal')
             statistics_container.append(iteration, test_statistics, data_type='test')
