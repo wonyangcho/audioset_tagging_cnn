@@ -50,7 +50,7 @@ class AST(nn.Module):
     # def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin,
     #              fmax, classes_num=527, fstride=10, tstride=10, input_fdim=128, input_tdim=1024, imagenet_pretrain=True, audioset_pretrain=False, model_size='small224', verbose=True):
     def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin,
-                 fmax, classes_num=527, fstride=10, tstride=10, input_fdim=64, input_tdim=1001, imagenet_pretrain=True, audioset_pretrain=False, model_size='small224', verbose=True):
+                 fmax, classes_num=527, fstride=10, tstride=10, input_fdim=64, input_tdim=1001, imagenet_pretrain=True, audioset_pretrain=False, model_size='tiny224', verbose=True):
       
         super(AST, self).__init__()
 
@@ -150,46 +150,7 @@ class AST(nn.Module):
                 self.v.pos_embed = new_pos_embed
                 trunc_normal_(self.v.pos_embed, std=.02)
 
-        # now load a model that is pretrained on both ImageNet and AudioSet
-        elif audioset_pretrain == True:
-            if audioset_pretrain == True and imagenet_pretrain == False:
-                raise ValueError('currently model pretrained on only audioset is not supported, please set imagenet_pretrain = True to use audioset pretrained model.')
-            if model_size != 'base384':
-                raise ValueError('currently only has base384 AudioSet pretrained model.')
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            if os.path.exists('../../pretrained_models/audioset_10_10_0.4593.pth') == False:
-                # this model performs 0.4593 mAP on the audioset eval set
-                audioset_mdl_url = 'https://www.dropbox.com/s/cv4knew8mvbrnvq/audioset_0.4593.pth?dl=1'
-                wget.download(audioset_mdl_url, out='../../pretrained_models/audioset_10_10_0.4593.pth')
-            sd = torch.load('../../pretrained_models/audioset_10_10_0.4593.pth', map_location=device)
-            audio_model = ASTModel(label_dim=527, fstride=10, tstride=10, input_fdim=128, input_tdim=1024, imagenet_pretrain=False, audioset_pretrain=False, model_size='base384', verbose=False)
-            audio_model = torch.nn.DataParallel(audio_model)
-            audio_model.load_state_dict(sd, strict=False)
-            self.v = audio_model.module.v
-            self.original_embedding_dim = self.v.pos_embed.shape[2]
-            self.mlp_head = nn.Sequential(nn.LayerNorm(self.original_embedding_dim), nn.Linear(self.original_embedding_dim, label_dim))
-
-            f_dim, t_dim = self.get_shape(fstride, tstride, input_fdim, input_tdim)
-            num_patches = f_dim * t_dim
-            self.v.patch_embed.num_patches = num_patches
-            if verbose == True:
-                print('frequncey stride={:d}, time stride={:d}'.format(fstride, tstride))
-                print('number of patches={:d}'.format(num_patches))
-
-            new_pos_embed = self.v.pos_embed[:, 2:, :].detach().reshape(1, 1212, 768).transpose(1, 2).reshape(1, 768, 12, 101)
-            # if the input sequence length is larger than the original audioset (10s), then cut the positional embedding
-            if t_dim < 101:
-                new_pos_embed = new_pos_embed[:, :, :, 50 - int(t_dim/2): 50 - int(t_dim/2) + t_dim]
-            # otherwise interpolate
-            else:
-                new_pos_embed = torch.nn.functional.interpolate(new_pos_embed, size=(12, t_dim), mode='bilinear')
-            if f_dim < 12:
-                new_pos_embed = new_pos_embed[:, :, 6 - int(f_dim/2): 6 - int(f_dim/2) + f_dim, :]
-            # otherwise interpolate
-            elif f_dim > 12:
-                new_pos_embed = torch.nn.functional.interpolate(new_pos_embed, size=(f_dim, t_dim), mode='bilinear')
-            new_pos_embed = new_pos_embed.reshape(1, 768, num_patches).transpose(1, 2)
-            self.v.pos_embed = nn.Parameter(torch.cat([self.v.pos_embed[:, :2, :].detach(), new_pos_embed], dim=1))
+        
 
     def get_shape(self, fstride, tstride, input_fdim=128, input_tdim=1024):
         test_input = torch.randn(1, 1, input_fdim, input_tdim)

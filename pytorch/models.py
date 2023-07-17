@@ -871,6 +871,7 @@ class ResNet22(nn.Module):
         return output_dict
 
 
+
 class ResNet38(nn.Module):
     def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin,
                  fmax, classes_num):

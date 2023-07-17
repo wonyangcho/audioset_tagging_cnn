@@ -9,14 +9,14 @@ CUDA_VISIBLE_DEVICES=0,1 python3 pytorch/main.py train \
     --mel_bins=64 \
     --fmin=50 \
     --fmax=14000 \
-    --model_type='MobileNetV3' \
+    --model_type='HTSAT_Swin_Transformer' \
     --loss_type='clip_bce' \
     --balanced='balanced' \
     --augmentation='mixup' \
-    --batch_size=512 \
+    --batch_size=16 \
     --learning_rate=1e-3 \
     --resume_iteration=0 \
-    --early_stop=100000 \
+    --early_stop=1000000 \
     --cuda \
     --use_wandb
 

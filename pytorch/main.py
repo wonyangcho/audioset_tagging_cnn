@@ -24,6 +24,7 @@ from models import (Cnn14, Cnn14_no_specaug, Cnn14_no_dropout,
                     MobileVit)
 from mobilenetv3 import MobileNetV3
 from ast_models import AST
+from htsat.htsat import HTSAT_Swin_Transformer
 from pytorch_utils import (move_data_to_device, count_parameters, count_flops,
                            do_mixup)
 from data_generator import (AudioSetDataset, TrainSampler, BalancedTrainSampler,
